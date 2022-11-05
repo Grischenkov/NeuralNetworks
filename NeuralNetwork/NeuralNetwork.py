@@ -32,7 +32,6 @@ class Network:
         output = np.array([input])
         for layer in self.layers:
             output = layer.forward(output)
-        print(output)
         return output
     def __backward(self, error, learning_rate):
         gradient = error
