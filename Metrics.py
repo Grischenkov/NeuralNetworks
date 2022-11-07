@@ -5,15 +5,21 @@ from sklearn.metrics import RocCurveDisplay
 from sklearn.metrics import ConfusionMatrixDisplay
 
 class Metric:
-    @staticmethod
-    def print_metrics(y_test, y_pred):
+    def print_classification_metrics(y_test, y_pred):
         params = pd.DataFrame()
         params.index = ['Accuracy', 'Precision', 'Recall', 'F1 score']
         for label in pd.DataFrame(y_test)[0].unique():
             TP, TN, FP, FN = Metric.__get_classifiers(y_test, y_pred, label)
-            params[label] = [(TP + TN) / (TP + TN + FP + FN), TP / (TP + FP), TP / (TP + FN), 2 * (((TP / (TP + FP)) * (TP / (TP + FN))) / ((TP / (TP + FP)) + (TP / (TP + FN))))]
+            params[label] = [Metric.__get_accuracy(TP, TN, FP, FN), Metric.__get_precision(TP, FP), Metric.__get_recall(TP, FN), Metric.__get_f1(TP, FP, FN)]
         print(params)
-    @staticmethod
+    def __get_accuracy(TP, TN, FP, FN):
+        return (TP + TN) / (TP + TN + FP + FN)
+    def __get_precision(TP, FP):
+        return TP / (TP + FP)
+    def __get_recall(TP, FN):
+        return TP / (TP + FN)
+    def __get_f1(TP, FP, FN):
+        return 2 * (((TP / (TP + FP)) * (TP / (TP + FN))) / ((TP / (TP + FP)) + (TP / (TP + FN))))
     def __get_classifiers(y_test, y_pred, label):
         TP = 0
         TN = 0
@@ -33,16 +39,13 @@ class Metric:
         return (TP, TN, FP, FN)
 
 class Plot:
-    @staticmethod
     def plot_confusion_matrix(y_test, y_pred):
         ConfusionMatrixDisplay.from_predictions(y_test, y_pred, colorbar=False)
-    @staticmethod
-    def plot_roc_curve(y_test, y_pred, labels=[1]):
+    def plot_roc_curve(y_test, y_pred, labels):
         f, ax = plt.subplots()
         plt.plot([0, 1], [0, 1], linestyle="--")
         for label in labels:
             RocCurveDisplay.from_predictions(y_test, y_pred, pos_label=label, ax=ax)
-    @staticmethod
     def plot_history_trend(history, metric):
         f, ax = plt.subplots()
         plt.plot(range(len(history)), history, label=metric)
