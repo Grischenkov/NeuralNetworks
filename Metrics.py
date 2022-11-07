@@ -1,3 +1,4 @@
+import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
@@ -37,6 +38,17 @@ class Metric:
                 else: 
                     FP += 1
         return (TP, TN, FP, FN)
+    def get_regression_metrics(y_test, y_pred):
+        params = pd.DataFrame()
+        params.index = ['MSE', 'RMSE', 'R^2']
+        params = [Metric.__get_mse(y_test, y_pred), Metric.__get_rmse(y_test, y_pred), Metric.__get_r2(y_test, y_pred)]
+        print(params)
+    def __get_mse(y_test, y_pred):
+        return np.square(np.subtract(y_test, y_pred)).mean()
+    def __get_rmse(y_test, y_pred):
+        return np.sqrt(np.square(np.subtract(y_test, y_pred)).mean())
+    def __get_r2(y_test, y_pred):
+        return 1 - (np.square(np.subtract(y_test, y_pred)).sum() / np.square(y_test - y_test.mean()).sum())
 
 class Plot:
     def plot_confusion_matrix(y_test, y_pred):
