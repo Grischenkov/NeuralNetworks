@@ -36,3 +36,12 @@ class Dense(Layer):
         self.weights -= learning_rate * weights_gradient.T
         self.bias -= learning_rate * output_gradient.T
         return np.dot(output_gradient, self.weights)
+class Flatten(Layer):
+    def __init__(self, input_shape):
+        self.input_shape = input_shape
+    def compile(self):
+        self.size = self.input_shape[0] * self.input_shape[0]
+    def forward(self, input):
+        return np.reshape(input, (1, -1))
+    def backward(self, output_gradient, learning_rate):
+        return np.reshape(output_gradient, self.input_shape)
