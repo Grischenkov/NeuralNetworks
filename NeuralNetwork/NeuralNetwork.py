@@ -1,3 +1,4 @@
+from tqdm import tqdm
 import numpy as np
 
 class Network:
@@ -9,12 +10,12 @@ class Network:
         self.layers.append(layer)
     def compile(self, loss):
         self.loss = loss
-        for i in range(1, len(self.layers)):
-            self.layers[i].compile(self.layers[i-1].size)
+        for i in tqdm(range(1, len(self.layers))):
+            self.layers[i].compile(self.layers[i-1].output_shape)
     def fit(self, X_train, Y_train, epochs, learning_rate):
         for i in range(epochs):
             loss = 0
-            for j in range(len(X_train)):
+            for j in tqdm(range(len(X_train))):
                 output = self.__forward(X_train[j])
                 loss += self.loss.function(Y_train[j], output)
                 error = self.loss.derivative(Y_train[j], output)
