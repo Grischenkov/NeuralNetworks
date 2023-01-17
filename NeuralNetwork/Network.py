@@ -10,9 +10,11 @@ class Network:
         self.layers.append(layer)
     def compile(self, loss):
         self.loss = loss
+        print("Compilation...")
         for i in tqdm(range(1, len(self.layers))):
             self.layers[i].compile(self.layers[i-1].output_shape)
     def fit(self, X_train, Y_train, epochs, learning_rate):
+        print("Learning...")
         for i in range(epochs):
             loss = 0
             for j in tqdm(range(len(X_train))):
@@ -22,10 +24,11 @@ class Network:
                 self.__backward(error, learning_rate)
             loss /= len(X_train)
             self.history.append(loss)
-            print(f'Epoch {i}/{epochs}: loss={loss}')
+            print(f'Epoch {i+1}/{epochs}: loss={loss}')
     def predict(self, X):
+        print("Prediction...")
         result = []
-        for i in range(len(X)):
+        for i in tqdm(range(len(X))):
             output = self.__forward(X[i])
             result.append(output[0])
         return result
