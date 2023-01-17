@@ -14,9 +14,11 @@
 ## Результаты
 
 История обучения модели:
+
 ![График истории обучения](images/history.png?raw=true "history")
 
 Метрики классификации:
+
 |           | POISONOUS  | EDIBLE   |
 |-----------|------------|----------|
 |Accuracy   | 0.998020   | 0.998020 |
@@ -25,7 +27,9 @@
 |F1 score   | 0.997859   | 0.998158 |
 
 ROC-кривая:
+
 ![ROC-кривая](images/ROC.png?raw=true "ROC")
 
 Матрица ошибок:
+
 ![Матрица ошибок](images/confusion-matrix.png?raw=true "confusion-matrix")
