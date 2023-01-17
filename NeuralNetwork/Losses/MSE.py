@@ -1,10 +1,7 @@
 import numpy as np
 
-class Loss:
-    def function(x):
-        pass
-    def derivative(x):
-        pass
+from NeuralNetwork.Losses.Loss import Loss
+
 class MSE(Loss):
     def function(y_true, y_pred):
         return np.square(np.subtract(y_pred, y_true)).mean()
