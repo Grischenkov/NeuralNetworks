@@ -5,9 +5,8 @@ from NeuralNetwork.Activations.Tanh import Tanh
 from NeuralNetwork.Activations.Sigmoid import Sigmoid
 
 class GRU(Layer):
-    def __init__(self, depth: int, block_shape: int) -> None:
-        self.depth = depth
-        self.output_shape = depth
+    def __init__(self, block_shape: int) -> None:
+        self.output_shape = 1
         self.block_shape = block_shape
         self.h_history = []
         self.x_history = []
@@ -16,7 +15,8 @@ class GRU(Layer):
         self.temp_history = []
         self.y = 0
     def compile(self, input_shape: int) -> None:
-        self.input_shape = input_shape
+        self.input_shape = input_shape[2]
+        self.depth = input_shape[1]
         self.w_z = np.random.rand(self.block_shape, self.input_shape)
         self.u_z = np.random.rand(self.block_shape, self.block_shape)
         self.w_r = np.random.rand(self.block_shape, self.input_shape)

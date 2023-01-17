@@ -4,15 +4,15 @@ from NeuralNetwork.Layers.Layer import Layer
 from NeuralNetwork.Activations.Activation import Activation
 
 class RNN(Layer):
-    def __init__(self, depth: int, block_shape: int, activation: Activation) -> None:
-        self.depth = depth
-        self.output_shape = depth
+    def __init__(self, block_shape: int, activation: Activation) -> None:
+        self.output_shape = 1
         self.activation = activation
         self.block_shape = block_shape
         self.h_history = []
         self.x_history = []
     def compile(self, input_shape: int) -> None:
-        self.input_shape = input_shape
+        self.input_shape = input_shape[2]
+        self.depth = input_shape[1]
         self.b_h = np.random.rand(self.block_shape, 1)
         self.b_y = np.random.rand(1, 1)
         self.w_xh = np.random.rand(self.block_shape, self.input_shape)
