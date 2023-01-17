@@ -38,10 +38,10 @@ class Metric:
                 else: 
                     FP += 1
         return (TP, TN, FP, FN)
-    def get_regression_metrics(y_true, y_pred):
+    def print_regression_metrics(y_true, y_pred):
         params = pd.DataFrame()
         params.index = ['MSE', 'RMSE', 'R^2']
-        params = [Metric.__get_mse(y_true, y_pred), Metric.__get_rmse(y_true, y_pred), Metric.__get_r2(y_true, y_pred)]
+        params[''] = [Metric.__get_mse(y_true, y_pred), Metric.__get_rmse(y_true, y_pred), Metric.__get_r2(y_true, y_pred)]
         print(params)
     def __get_mse(y_true, y_pred):
         return np.square(np.subtract(y_true, y_pred)).mean()
