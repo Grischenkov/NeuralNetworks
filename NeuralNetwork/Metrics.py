@@ -57,7 +57,9 @@ class Plot:
         f, ax = plt.subplots()
         plt.plot([0, 1], [0, 1], linestyle="--")
         for label in labels:
-            RocCurveDisplay.from_predictions(y_true, y_pred, pos_label=label, ax=ax)
+            RocCurveDisplay.from_predictions(y_true, y_pred, pos_label=label, ax=ax, name=label)
+            ax.set_xlabel('')
+            ax.set_ylabel('')
     def plot_history_trend(history, metric):
         f, ax = plt.subplots()
         plt.plot(range(len(history)), history, label=metric)

@@ -22,7 +22,7 @@ class Conv2D(Layer):
         for i in range(self.filters):
             for j in range(self.input.shape[1]):
                 self.activation_input[i] += signal.correlate2d(self.input[0][j], self.kernels[i, j], "valid")
-        return np.array([self.activation.function(self.activation_input)])
+        return np.array([self.activation_input])
     def backward(self, output_gradient: np.ndarray, learning_rate: float) -> np.ndarray:
         kernels_gradient = np.zeros(self.kernels_shape)
         input_gradient = np.zeros(self.input_shape)

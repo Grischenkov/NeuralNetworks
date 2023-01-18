@@ -1,5 +1,6 @@
-from tqdm import tqdm
 import numpy as np
+
+from tqdm import tqdm
 
 class Network:
     def __init__(self):
